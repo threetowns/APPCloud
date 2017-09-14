@@ -23,24 +23,50 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
   apiready = function(){
-  	footerTab(0)
+  	changefooterTab(0)
   };
 
   var footer = $api.byId('footer')
   	 ,footerTab = $api.domAll(footer, '.items')
+  	 ,footerHeight = $api.offset(footer).h;
+
+  // config frame name
+  var frameNames = ['resource_frame', 'release_frame', 'usercenter_frame'];
 
 
   function changefooterTab(index) {
     for (var i = 0; i < footerTab.length; i++) {
       if (index == i) {
         $api.addCls(footerTab[i], 'cur');
-        
+        openFrame(i, true)
       } else {
         $api.removeCls(footerTab[i], 'cur');
-        
+        openFrame(i, false)
       }
     }
   }
+
+function openFrame(index, isOpen) {
+  if (isOpen) {
+    api.openFrame({
+      name: frameNames[index],
+      url: './' + frameNames[index] + '.html',
+      bounces: false,
+      rect: {
+        x: 0,
+        y: 0,
+        w: 'auto',
+        h: api.winHeight - footerHeight
+      },
+      vScrollBarEnabled:false
+    });
+  } else {
+    api.setFrameAttr({
+      name: frameNames[index],
+      hidden: true
+    });
+  }
+};
 
 </script>
 </html>
