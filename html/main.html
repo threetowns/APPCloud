@@ -6,8 +6,24 @@
     <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
     <title>Hello APP</title>
     <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/common.css" />
+    <script>
+      document.getElementsByTagName('html')[0].style.fontSize = (document.documentElement.clientWidth < 640) ? (document.documentElement.clientWidth / 6.40 + "px") : "100px";
+    </script>
 </head>
 <body>
-
+  <div id="main"></div>
+  <div class="footer_nav">
+    <div class="items cur" tapmode="cur" onclick="footerTab(0)"><i class="icon-resource"></i><span>资源库</span></div>
+    <div class="items" tapmode="cur" onclick="footerTab(1)"><i class="icon-release"></i><span>发布</span></div>
+    <div class="items" tapmode="cur" onclick="footerTab(2)"><i class="icon-usercenter"></i><span>个人中心</span></div>
+  </div>
 </body>
+
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+  apiready = function(){
+  	
+  };
+</script>
 </html>
