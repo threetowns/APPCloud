@@ -13,17 +13,34 @@
 </head>
 <body>
   <div id="main"></div>
-  <div class="footer_nav">
-    <div class="items cur" tapmode="cur" onclick="footerTab(0)"><i class="icon-resource"></i><span>资源库</span></div>
-    <div class="items" tapmode="cur" onclick="footerTab(1)"><i class="icon-release"></i><span>发布</span></div>
-    <div class="items" tapmode="cur" onclick="footerTab(2)"><i class="icon-usercenter"></i><span>个人中心</span></div>
+  <div id="footer" class="footer_nav">
+    <div class="items cur" tapmode="cur" onclick="changefooterTab(0)"><i class="icon-resource"></i><span>资源库</span></div>
+    <div class="items" tapmode="cur" onclick="changefooterTab(1)"><i class="icon-release"></i><span>发布</span></div>
+    <div class="items" tapmode="cur" onclick="changefooterTab(2)"><i class="icon-usercenter"></i><span>个人中心</span></div>
   </div>
 </body>
 
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
   apiready = function(){
-  	
+  	footerTab(0)
   };
+
+  var footer = $api.byId('footer')
+  	 ,footerTab = $api.domAll(footer, '.items')
+
+
+  function changefooterTab(index) {
+    for (var i = 0; i < footerTab.length; i++) {
+      if (index == i) {
+        $api.addCls(footerTab[i], 'cur');
+        
+      } else {
+        $api.removeCls(footerTab[i], 'cur');
+        
+      }
+    }
+  }
+
 </script>
 </html>
