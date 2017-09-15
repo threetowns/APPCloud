@@ -68,6 +68,7 @@
 <script>
   apiready = function(){
     Scroll()
+    getClassifyList()
   }
       
   
@@ -110,6 +111,44 @@
             // alert(JSON.stringify(ret));
         } else {
             // alert(JSON.stringify(err));
+        }
+    });
+  }
+
+  function getClassifyList(){
+    var data = {
+      "version": "1.0",
+      "pageSize": 5,
+      "pageNum": 1,
+      "data":{
+        "demandType":0,
+        "demandCategory":0,
+        "auditStatus":1,
+        "sort":10
+      }
+    }
+
+    api.ajax({
+        url: 'http://172.16.50.57:8080/api/wxdemand/getClassifyList',
+        method: 'post',
+        data: {
+          body: data
+        },
+        dataType: 'json',
+        timeout: 100,
+        returnAll: true,
+        headers:{
+          'Content-Type': 'application/json;charset=utf-8'
+        }
+    }, function(ret, err) {
+        if (ret) {
+            if (ret.statusCode == '200') {
+              alert(JSON.stringify(ret));
+            }else{
+              alert('糟糕，错误状态码：'+ret.statusCode)
+            }
+        } else {
+            alert('出错啦：'+err.statusCode);
         }
     });
   }
