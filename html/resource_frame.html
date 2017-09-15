@@ -102,16 +102,17 @@
     });
   }
 
-  function getClassifyList(){
+  function getClassifyList(params){
+    var params = params || {}
     var data = {
       "version": "1.0",
-      "pageSize": 5,
-      "pageNum": 1,
-      "data":{
-        "demandType":"",
-        "demandCategory":"",
-        "auditStatus":"",
-        "sort":10
+      "pageSize": params.pageSize || 5,
+      "pageNum": params.pageNum || 1,
+      "data": params.data || {
+        "demandType": '',
+        "demandCategory": '',
+        "auditStatus":  '',
+        "sort":  10
       }
     }
 
@@ -130,11 +131,10 @@
     }, function(ret, err) {
         if (ret) {
             if (ret.statusCode == '200') {
-              //alert(JSON.stringify(ret.body.data));
               var result = ret.body.data;
               var matchList = $api.byId('matchList')
               var tpl = template(result);
-              $api.html(matchList,tpl)
+              $api.append(matchList, tpl);
             }else{
               alert('糟糕，错误状态码：'+ret.statusCode)
             }
@@ -169,10 +169,12 @@
         }
     }, function(ret, err) {
         if (ret) {
-
-          api.refreshHeaderLoadDone()
+          setTimeout(function(){
+            getClassifyList({ pageNum: 2 })
+            api.refreshHeaderLoadDone()
+          }, 2000)
         } else {
-            alert(JSON.stringify(err));
+          alert(JSON.stringify(err));
         }
     });
   };
