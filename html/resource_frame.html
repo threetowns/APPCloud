@@ -34,24 +34,10 @@
       <li><a href=""><img src="../image/cate_5.png" alt=""><span>其他定制</span></a></li>
   </ul>
   <div id="main" class="flex-con">
-      <div class="matchList">
-          <div class="items">
+      <div class="matchList" id="matchList">
+          <!-- <div class="items">
               <div class="title">多行业精准营销数据服务</div>
               <div class="type type-need">需</div>
-              <div class="bd">
-                  <span class="cate">精准营销</span>
-                  <span class="price">￥<b>1234.56</b></span>
-                  <span class="sale">原价￥10</span>
-              </div>
-              <div class="meta">
-                  <span><i class="icon-view"></i>56</span>
-                  <span><i class="icon-like"></i>56</span>
-                  <span>2017-09-04 19:22:57</span>
-              </div>
-          </div>
-          <div class="items">
-              <div class="title">多行业精准营销数据服务</div>
-              <div class="type type-receive">接</div>
               <div class="bd"><span class="cate">精准营销</span><span class="price">￥<b>1234.56</b></span><span class="sale">原价￥10</span></div>
               <div class="meta"><span><i class="icon-view"></i>56</span><span><i class="icon-like"></i>56</span><span>2017-09-04 19:22:57</span></div>
           </div>
@@ -60,7 +46,7 @@
               <div class="type type-receive">接</div>
               <div class="bd"><span class="cate">精准营销</span><span class="price">￥<b>1234.56</b></span><span class="sale">原价￥10</span></div>
               <div class="meta"><span><i class="icon-view"></i>56</span><span><i class="icon-like"></i>56</span><span>2017-09-04 19:22:57</span></div>
-          </div>
+          </div> -->
       </div>
   </div>
 
@@ -69,6 +55,7 @@
   apiready = function(){
     Scroll()
     getClassifyList()
+    initPull()
   }
       
   
@@ -121,9 +108,9 @@
       "pageSize": 5,
       "pageNum": 1,
       "data":{
-        "demandType":0,
-        "demandCategory":0,
-        "auditStatus":1,
+        "demandType":"",
+        "demandCategory":"",
+        "auditStatus":"",
         "sort":10
       }
     }
@@ -143,7 +130,11 @@
     }, function(ret, err) {
         if (ret) {
             if (ret.statusCode == '200') {
-              alert(JSON.stringify(ret));
+              //alert(JSON.stringify(ret.body.data));
+              var result = ret.body.data;
+              var matchList = $api.byId('matchList')
+              var tpl = template(result);
+              $api.html(matchList,tpl)
             }else{
               alert('糟糕，错误状态码：'+ret.statusCode)
             }
@@ -151,6 +142,85 @@
             alert('出错啦：'+err.statusCode);
         }
     });
+  }
+
+  // 刷新
+  function initPull() {
+    api.setCustomRefreshHeaderInfo({
+        bgColor: '#C0C0C0',
+        images: {
+            pull: 'pullImagePath', 
+            transform: [
+                'transformImagePath0', 
+                'transformImagePath1', 
+                'transformImagePath2',
+                'transformImagePath3',
+                'transformImagePath4',
+                'transformImagePath5'
+            ],
+            load: [ 
+                'loadImagePath0', 
+                'loadImagePath1', 
+                'loadImagePath2', 
+                'loadImagePath3', 
+                'loadImagePath4', 
+                'loadImagePath5', 
+            ]
+        }
+    }, function(ret, err) {
+        if (ret) {
+
+          api.refreshHeaderLoadDone()
+        } else {
+            alert(JSON.stringify(err));
+        }
+    });
+  };
+
+  function template(data){
+    var template = '';
+    var list = data.classifyList;
+    if (list.length >0) {
+      for (var i = 0; i < list.length; i++) {
+        var cate = '';
+        switch(list[i].demand_category){
+          case 0:
+            cate = '精准营销'
+            break;
+          case 1:
+            cate = '数据报告'
+            break;
+          case 2:
+            cate = '数据交易'
+            break;
+          case 3:
+            cate = 'API'
+            break;
+          case 4:
+            cate = '其他定制'
+            break;
+        }
+        var typeName = ''
+           ,typeClass = '';
+        switch(list[i].demand_type){
+          case 0:
+            typeName = '需'
+            typeClass = 'receive'
+            break;
+          case 1:
+            typeName = '接'
+            typeClass = 'need'
+            break;
+        }
+        template += '<div class="items">';
+        template += '<div class="title">'+ list[i].id +'</div>';
+        template += '<div class="type type-'+ typeClass +'">'+ typeName +'</div>';
+        template += '<div class="bd"><span class="cate">'+cate+'</span><span class="price">￥<b>'+ list[i].current_price +'</b></span><span class="sale">原价￥'+ list[i].original_cost +'</span></div>'
+        template += '<div class="meta"><span><i class="icon-view"></i>' + list[i].browse_count +'</span><span><i class="icon-like"></i>' +list[i].fav_count+ '</span><span>2017-09-04 19:22:57</span></div>';
+        template += '</div>';
+      }
+    }
+    return template;
   }
   
   </script>
