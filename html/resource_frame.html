@@ -75,6 +75,7 @@
   function Scroll(){
     var banner = $api.byId('banner')
        ,bannerH = $api.offset(banner);
+    $api.fixStatusBar(banner);
     var UIScrollPicture = api.require('UIScrollPicture');
     UIScrollPicture.open({
         rect: {
