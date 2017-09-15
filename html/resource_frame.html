@@ -11,9 +11,21 @@
   <script>
     document.getElementsByTagName('html')[0].style.fontSize = (document.documentElement.clientWidth < 640) ? (document.documentElement.clientWidth / 6.40 + "px") : "100px";
   </script>
+  <style>
+    .banner{
+      position: relative;
+      height: 4.2rem;
+      width: 100%;
+      overflow: hidden;
+    }
+    .banner img{
+      width: 100%;
+      height: auto;
+    }
+  </style>
 </head>
 <body>
-  <div id="slider"></div>
+  <div id="banner" class="banner"></div>
   <ul class="cateList">
       <li><a href=""><img src="../image/cate_1.png" alt=""><span>精准营销</span></a></li>
       <li><a href=""><img src="../image/cate_2.png" alt=""><span>数据报告</span></a></li>
@@ -51,5 +63,56 @@
           </div>
       </div>
   </div>
+
+<script type="text/javascript" src="../script/api.js"></script>
+<script>
+  apiready = function(){
+    Scroll()
+  }
+      
+  
+
+  function Scroll(){
+    var banner = $api.byId('banner')
+       ,bannerH = $api.offset(banner);
+    var UIScrollPicture = api.require('UIScrollPicture');
+    UIScrollPicture.open({
+        rect: {
+            x: 0,
+            y: 0,
+            w: api.winWidth,
+            h: bannerH
+        },
+        data: {
+            paths: [
+                'http://dyh.chinadatatrading.com/static/img/b1.jpg',
+                'http://dyh.chinadatatrading.com/static/img/b2.jpg'
+            ],
+            captions: []
+        },
+        styles: {
+            caption: {},
+            indicator: {
+                align: 'center',
+                color: '#fff',
+                activeColor: '#d0cdd1'
+            }
+        },
+        placeholderImg: 'http://img.lanrentuku.com/img/allimg/1212/5-121204193935-51.gif',
+        contentMode: 'scaleToFill',
+        interval: 3,
+        fixedOn: api.frameName,
+        loop: true,
+        fixed: false
+    }, function(ret, err) {
+        if (ret) {
+            // alert(JSON.stringify(ret));
+        } else {
+            // alert(JSON.stringify(err));
+        }
+    });
+  }
+  
+  </script>
 </body>
 </html>
