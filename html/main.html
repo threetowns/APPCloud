@@ -12,61 +12,44 @@
     </script>
 </head>
 <body>
-  <div id="main"></div>
-  <div id="footer" class="footer_nav">
-    <div class="items cur" tapmode="cur" onclick="changefooterTab(0)"><i class="icon-resource"></i><span>资源库</span></div>
-    <div class="items" tapmode="cur" onclick="changefooterTab(1)"><i class="icon-release"></i><span>发布</span></div>
-    <div class="items" tapmode="cur" onclick="changefooterTab(2)"><i class="icon-usercenter"></i><span>个人中心</span></div>
+  <div id="wrap" class="flex-wrap flex-vertical">
+    <div id="main" class="flex-con"></div>
+    <div id="footer" class="footer_nav">
+      <div class="items cur" tapmode="cur" onclick="changefooterTab(0)"><i class="icon-resource"></i><span>资源库</span></div>
+      <div class="items" tapmode="cur" onclick="changefooterTab(1)"><i class="icon-release"></i><span>发布</span></div>
+      <div class="items" tapmode="cur" onclick="changefooterTab(2)"><i class="icon-usercenter"></i><span>个人中心</span></div>
+    </div>
   </div>
 </body>
 
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
   apiready = function(){
-  	changefooterTab(0)
+    // 初始化事件监听
+    initEventListenner()
+    
   };
 
-  var footer = $api.byId('footer')
-  	 ,footerTab = $api.domAll(footer, '.items')
-  	 ,footerHeight = $api.offset(footer).h;
-
-  // config frame name
-  var frameNames = ['resource_frame', 'release_frame', 'usercenter_frame'];
-
-
-  function changefooterTab(index) {
-    for (var i = 0; i < footerTab.length; i++) {
-      if (index == i) {
-        $api.addCls(footerTab[i], 'cur');
-        openFrame(i, true)
-      } else {
-        $api.removeCls(footerTab[i], 'cur');
-        openFrame(i, false)
-      }
-    }
-  }
-
-function openFrame(index, isOpen) {
-  if (isOpen) {
-    api.openFrame({
-      name: frameNames[index],
-      url: './' + frameNames[index] + '.html',
-      bounces: false,
-      rect: {
-        x: 0,
-        y: 0,
-        w: 'auto',
-        h: api.winHeight - footerHeight
-      },
-      vScrollBarEnabled:false
+// 初始化事件监听
+function initEventListenner() {
+    // 拦截Android的返回键，在首页点击返回键，提示退出应用
+    api.addEventListener({
+        name: 'keyback'
+    }, function(ret, err) {
+        api.confirm({
+            title: '提示',
+            msg: '是否退出应用',
+            buttons: ['确定', '取消']
+        }, function(ret, err) {
+            if (ret.buttonIndex == 1) {
+                // 关闭当前的主Widget，就可以实现推出APP的效果
+                api.closeWidget({
+                    silent: true //直接退出，无需提示
+                });
+            }
+        });
     });
-  } else {
-    api.setFrameAttr({
-      name: frameNames[index],
-      hidden: true
-    });
-  }
-};
+}
 
 </script>
 </html>

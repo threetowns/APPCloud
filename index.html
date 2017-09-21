@@ -8,14 +8,17 @@
     <link rel="stylesheet" type="text/css" href="./css/api.css" />
 </head>
 <body>
-    <div id="wrap"></div>
+    
 </body>
 <script type="text/javascript" src="./script/api.js"></script>
 <script type="text/javascript">
     apiready = function(){
         api.openWin({
             name: 'main',
-            url: 'html/main.html'
+            url: 'html/main.html',
+            // 1. 根据UI架构设计，打开首页Window
+            // 2. 由于是次Window是首页窗口，通过设置参数slidBackEnabled，关闭iOS默认回划关闭窗口的功能
+            slidBackEnabled: false
         })
     };
 </script>

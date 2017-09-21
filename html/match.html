@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width"/>
+  <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+  <title>资源库</title>
+  <link rel="stylesheet" type="text/css" href="../css/api.css" />
+  <link rel="stylesheet" type="text/css" href="../css/common.css" />
+  <link rel="stylesheet" href="../css/list.css">
+  <script>
+    document.getElementsByTagName('html')[0].style.fontSize = (document.documentElement.clientWidth < 640) ? (document.documentElement.clientWidth / 6.40 + "px") : "100px";
+  </script>
+  <style>
+    .banner{
+      position: relative;
+      height: 4.2rem;
+      width: 100%;
+      overflow: hidden;
+    }
+    .banner img{
+      width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+
+<div class="flex-con">
+    <div class="matchList" id="matchList">
+        <!-- <div class="items">
+            <div class="title">多行业精准营销数据服务</div>
+            <div class="type type-need">需</div>
+            <div class="bd"><span class="cate">精准营销</span><span class="price">￥<b>1234.56</b></span><span class="sale">原价￥10</span></div>
+            <div class="meta"><span><i class="icon-view"></i>56</span><span><i class="icon-like"></i>56</span><span>2017-09-04 19:22:57</span></div>
+        </div>
+        <div class="items">
+            <div class="title">多行业精准营销数据服务</div>
+            <div class="type type-receive">接</div>
+            <div class="bd"><span class="cate">精准营销</span><span class="price">￥<b>1234.56</b></span><span class="sale">原价￥10</span></div>
+            <div class="meta"><span><i class="icon-view"></i>56</span><span><i class="icon-like"></i>56</span><span>2017-09-04 19:22:57</span></div>
+        </div> -->
+    </div>
+</div>
+
+<script type="text/javascript" src="../script/api.js"></script>
+<script>
+  apiready = function(){
+    getClassifyList()
+    initPull()
+  }
+      
+  
+  var pageNumber = 1;
+
+  function getClassifyList(params){
+    var params = params || {}
+    var data = {
+      "version": "1.0",
+      "pageSize": params.pageSize || 2,
+      "pageNum": params.pageNum || pageNumber,
+      "data": params.data || {
+        "demandType": '',
+        "demandCategory": '',
+        "auditStatus":  '',
+        "sort":  10
+      }
+    }
+
+    api.ajax({
+        url: 'http://172.16.50.57:8080/api/wxdemand/getClassifyList',
+        method: 'post',
+        data: {
+          body: data
+        },
+        dataType: 'json',
+        timeout: 100,
+        returnAll: true,
+        headers:{
+          'Content-Type': 'application/json;charset=utf-8'
+        }
+    }, function(ret, err) {
+        if (ret) {
+            if (ret.statusCode == '200') {
+              var result = ret.body.data;
+              var matchList = $api.byId('matchList')
+              var tpl = template(result);
+              $api.append(matchList, tpl);
+            }else{
+              alert('糟糕，错误状态码：'+ret.statusCode)
+            }
+        } else {
+            alert('出错啦：'+err.statusCode);
+        }
+    });
+  }
+
+  // 刷新
+  function initPull() {
+    api.setCustomRefreshHeaderInfo({
+        bgColor: '#C0C0C0',
+        images: {
+            pull: 'pullImagePath', 
+            transform: [
+                'transformImagePath0', 
+                'transformImagePath1', 
+                'transformImagePath2',
+                'transformImagePath3',
+                'transformImagePath4',
+                'transformImagePath5'
+            ],
+            load: [ 
+                'loadImagePath0', 
+                'loadImagePath1', 
+                'loadImagePath2', 
+                'loadImagePath3', 
+                'loadImagePath4', 
+                'loadImagePath5', 
+            ]
+        }
+    }, function(ret, err) {
+        if (ret) {
+          setTimeout(function(){
+            getClassifyList({ pageNum: pageNumber++ })
+            api.refreshHeaderLoadDone()
+          }, 2000)
+        } else {
+          alert(JSON.stringify(err));
+        }
+    });
+  };
+
+  function template(data){
+    var template = '';
+    var list = data.classifyList;
+    if (list.length >0) {
+      for (var i = 0; i < list.length; i++) {
+        var cate = '';
+        switch(list[i].demand_category){
+          case 0:
+            cate = '精准营销'
+            break;
+          case 1:
+            cate = '数据报告'
+            break;
+          case 2:
+            cate = '数据交易'
+            break;
+          case 3:
+            cate = 'API'
+            break;
+          case 4:
+            cate = '其他定制'
+            break;
+        }
+        var typeName = ''
+           ,typeClass = '';
+        switch(list[i].demand_type){
+          case 0:
+            typeName = '需'
+            typeClass = 'receive'
+            break;
+          case 1:
+            typeName = '接'
+            typeClass = 'need'
+            break;
+        }
+        template += '<div class="items">';
+        template += '<div class="title">'+ list[i].id +'</div>';
+        template += '<div class="type type-'+ typeClass +'">'+ typeName +'</div>';
+        template += '<div class="bd"><span class="cate">'+cate+'</span><span class="price">￥<b>'+ list[i].current_price +'</b></span><span class="sale">原价￥'+ list[i].original_cost +'</span></div>'
+        template += '<div class="meta"><span><i class="icon-view"></i>' + list[i].browse_count +'</span><span><i class="icon-like"></i>' +list[i].fav_count+ '</span><span>2017-09-04 19:22:57</span></div>';
+        template += '</div>';
+      }
+    }
+    return template;
+  }
+  
+  </script>
+</body>
+</html>
