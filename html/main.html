@@ -30,11 +30,10 @@
     funIniGroup()
   };
 
-
+var framesName = ['resource', 'release', 'user'];
 // 初始化frameGroup
 function funIniGroup(){
     var eFootLis = $api.domAll('#footer .items'),
-        framesName = ['resource', 'release', 'user'],
         frames = [];
     for (var i = 0,len = eFootLis.length; i < len; i++) {
             frames.push( {
@@ -79,6 +78,15 @@ function changefooterTab( tag ) {
       name: 'group',
       index: index
   });
+
+  // 使用framgGroup时，frame里又打开了新frame，切换framegroup组中frame时，只有frameGroup中的frame会显示和隐藏，而其它frame(嵌套的frame)会一直显示。
+  // 原因： 在APICloud中，frame与frame之间是平等的，使用openFrameGroup时，组内frame的隐藏/显示不会影响组外frame。
+  // url: http://www.lg0351.com/news/show-609.html
+  if (index !== 0) {
+    api.setFrameAttr({ name: 'matchlist', hidden: true });
+  }else{
+    api.setFrameAttr({ name: 'matchlist', hidden: false });
+  }
 }
 
 // 初始化事件监听
