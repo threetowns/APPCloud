@@ -37,12 +37,6 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script>
   apiready = function(){
-    $api.fixStatusBar(banner);
-    
-    api.setStatusBarStyle({
-        style: 'dark',
-        color: '#6ab494'
-    });
     Scroll()
     openMatchFrame()
   }
@@ -53,6 +47,8 @@
   function Scroll(){
       banner = $api.byId('banner')
        ,bannerH = $api.offset(banner).h;
+
+    $api.fixStatusBar(banner);
     var UIScrollPicture = api.require('UIScrollPicture');
     UIScrollPicture.open({
         rect: {
@@ -101,7 +97,7 @@
               x: 0,
               y: bannerH + cateH,
               w: 'auto',
-              h: 'auto'
+              h: api.frameHeight - bannerH - cateH
           },
           pageParam: {
               name: 'test'

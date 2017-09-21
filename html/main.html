@@ -15,9 +15,9 @@
   <div id="wrap" class="flex-wrap flex-vertical">
     <div id="main" class="flex-con"></div>
     <div id="footer" class="footer_nav">
-      <div class="items cur" tapmode="cur" onclick="changefooterTab(0)"><i class="icon-resource"></i><span>资源库</span></div>
-      <div class="items" tapmode="cur" onclick="changefooterTab(1)"><i class="icon-release"></i><span>发布</span></div>
-      <div class="items" tapmode="cur" onclick="changefooterTab(2)"><i class="icon-usercenter"></i><span>个人中心</span></div>
+      <div class="items cur" tapmode="cur" onclick="changefooterTab(this)"><i class="icon-resource"></i><span>资源库</span></div>
+      <div class="items" tapmode="cur" onclick="changefooterTab(this)"><i class="icon-release"></i><span>发布</span></div>
+      <div class="items" tapmode="cur" onclick="changefooterTab(this)"><i class="icon-usercenter"></i><span>个人中心</span></div>
     </div>
   </div>
 </body>
@@ -27,8 +27,59 @@
   apiready = function(){
     // 初始化事件监听
     initEventListenner()
-    
+    funIniGroup()
   };
+
+
+// 初始化frameGroup
+function funIniGroup(){
+    var eFootLis = $api.domAll('#footer .items'),
+        framesName = ['resource', 'release', 'user'],
+        frames = [];
+    for (var i = 0,len = eFootLis.length; i < len; i++) {
+            frames.push( {
+                name: framesName[i],
+                url: './'+framesName[i]+'.html',
+                bgColor : 'rgba(0,0,0,.2)',
+                bounces:true
+            } )
+    }
+    api.openFrameGroup({
+        name: 'group',
+        scrollEnabled: false,
+        rect: {
+            x: 0,
+            y: 0,
+            w: api.winWidth,
+            h: $api.dom('#main').offsetHeight
+        },
+        index: 0,
+        frames: frames
+    }, function (ret, err) {
+
+    });
+}
+
+// footer切换按钮
+function changefooterTab( tag ) {
+  // 当前高亮不做操作
+  if( tag == $api.dom('#footer .items.cur') )return;
+
+  var eFootLis = $api.domAll('#footer .items'),
+      index = 0;
+  for (var i = 0,len = eFootLis.length; i < len; i++) {
+      if( tag == eFootLis[i] ){
+          index = i;
+      }else{
+          $api.removeCls(eFootLis[i], 'cur');
+      }
+  }
+  $api.addCls( eFootLis[index], 'cur');
+  api.setFrameGroupIndex({
+      name: 'group',
+      index: index
+  });
+}
 
 // 初始化事件监听
 function initEventListenner() {
