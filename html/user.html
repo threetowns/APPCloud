@@ -12,20 +12,35 @@
     document.getElementsByTagName('html')[0].style.fontSize = (document.documentElement.clientWidth < 640) ? (document.documentElement.clientWidth / 6.40 + "px") : "100px";
   </script>
   <style>
-    .banner{
-      position: relative;
-      height: 4.2rem;
-      width: 100%;
-      overflow: hidden;
-    }
-    .banner img{
-      width: 100%;
-      height: auto;
-    }
+    .profile {background: #fff;}
+    .profile .footer_nav {border-top-color: #ccc;}
+    .profile-cover {height: 3.76rem;width: 100%;padding-top: .31rem;background: #4a8bdb url('http://dyh.chinadatatrading.com/static/img/usercenter.d83cfe0.gif') center no-repeat;background-size: cover;text-align: center;}
+    .profile-cover .face {width: 1.68rem;height: 1.68rem;border-radius: 50%;margin: 0 auto;overflow: hidden;}
+    .profile-cover .face img {width: 100%;height: 100%;}
+    .profile-cover .account {height: .42rem;font-size: .32rem;line-height: .42rem;color: #fff;margin: .18rem auto .22rem;text-align: center;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;}
+    .profile-cover .action {height: .52rem;font-size: .28rem;line-height: .52rem;padding: 0 .22rem;background: #fff;color: #2c3544;border-radius: .26rem;text-align: center;display: inline-block;}
+    .profile-list .items {position: relative;width: 100%;height: 1rem;font-size: .32rem;line-height: 1rem;color: #666;text-indent: 0.2rem;display: block;overflow: hidden;}
+    .profile-list .items:after {position: absolute;bottom: 0;font-family: 'icomoon' !important;content: "\e90a";right: 0.32rem;}
+    .profile-list .items:before {position: absolute;bottom: 0;left: 0.2rem;content: "";display: block;height: 1px;width: 100%;background: #ebebeb;}
+    .profile-list .items > i {font-size: .42rem;width: .88rem;height: 1rem;line-height: 1rem;text-align: center;display: inline-block;vertical-align: top;}
+    .profile-list .items > i.icon-order {color: #ffa632;}
+    .profile-list .items > i.icon-msg {color: #2e99fc;}
+    .profile-list .items > i.icon-favorite {color: #fc836f;}
   </style>
 </head>
 <body>
-  <h1>match</h1>
+  <div class="profile">
+    <div class="profile-cover">
+      <div class="face"><img src="http://dyh.chinadatatrading.com/static/img/face.90395a1.jpg" alt="头像"></div>
+      <div class="account">jackLei</div>
+      <div class="action" click="logout()">切换帐号</div>
+    </div>
+    <div class="profile-list">
+      <a href="/usercenter/release" class="items"><i class="icon-order"></i>发布清单</a>
+      <a href="/usercenter/reply" class="items"><i class="icon-msg"></i>我的回复</a>
+      <a href="/usercenter/favorite" class="items"><i class="icon-favorite"></i>我的收藏</a>
+    </div>
+  </div>
 
 <script type="text/javascript" src="../script/api.js"></script>
 <script>
