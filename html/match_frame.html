@@ -165,7 +165,7 @@
             typeClass = 'need'
             break;
         }
-        template += '<div class="items">';
+        template += '<div class="commonItems" onclick="openReleaseDetailsWin('+ list[i].id +')">';
         template += '<div class="title">'+ list[i].id +'</div>';
         template += '<div class="type type-'+ typeClass +'">'+ typeName +'</div>';
         template += '<div class="bd"><span class="cate">'+cate+'</span><span class="price">￥<b>'+ list[i].current_price +'</b></span><span class="sale">原价￥'+ list[i].original_cost +'</span></div>'
@@ -175,7 +175,21 @@
     }
     return template;
   }
-  
+
+  // 打开详情页
+  function openReleaseDetailsWin(id) {
+    api.openWin({
+        name: 'releaseDetails',
+        url: './release_details.html',
+        pageParam: {
+            id: id
+        },
+        animation: {
+          type: "fade"
+        }
+    });
+  }
+
   </script>
 </body>
 </html>
