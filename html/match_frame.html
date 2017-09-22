@@ -34,10 +34,23 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script>
   apiready = function(){
+    initEventListenner()
     getClassifyList()
-    initPull()
+    //initPull()
   }
-      
+
+  function initEventListenner(){
+  // 监听滚动到Frame底部的事件
+      api.addEventListener({
+          name: 'scrolltobottom',
+          extra: {
+              threshold: 300 // 距离底部还有多少触发scrolltobottom事件
+          }
+      }, function(ret, err) {
+          // 获取更多的商品
+          getClassifyList();
+      });
+  }
   
   var pageNumber = 1;
 
