@@ -29,6 +29,7 @@
             <div class="meta"><span><i class="icon-view"></i>56</span><span><i class="icon-like"></i>56</span><span>2017-09-04 19:22:57</span></div>
         </div> -->
     </div>
+    <div class="push-status" id="pushStatus">上拉显示更多</div>
 </div>
 
 <script type="text/javascript" src="../script/api.js"></script>
@@ -44,17 +45,30 @@
       api.addEventListener({
           name: 'scrolltobottom',
           extra: {
-              threshold: 60 // 距离底部还有多少触发scrolltobottom事件
+              threshold: 0 // 距离底部还有多少触发scrolltobottom事件
           }
       }, function(ret, err) {
           // 获取更多的商品
-          getClassifyList();
+          if (curCount < pageSize) {
+            var pushStatus = $api.byId('pushStatus');
+            pushStatus.innerHTML = "没有啦！";
+          }else{
+            getClassifyList();
+          }
       });
   }
   
-  var pageNumber = 1;
+  var curCount;
+  var pageNum = 0;
+  var Limit = 1;
+  var pageSize = 10
 
   function getClassifyList(params){
+    
+
+    pageNum += Limit;
+    
+
     api.showProgress({
         style: 'default',
         animationType: 'fade',
@@ -65,8 +79,8 @@
     var params = params || {}
     var data = {
       "version": "1.0",
-      "pageSize": params.pageSize || 2,
-      "pageNum": params.pageNum || pageNumber,
+      "pageSize": params.pageSize || pageSize,
+      "pageNum": pageNum,
       "data": params.data || {
         "demandType": '',
         "demandCategory": '',
@@ -89,20 +103,30 @@
         }
     }, function(ret, err) {
         if (ret) {
-            api.hideProgress();
+            // 恢复下拉刷新的状态
+            api.refreshHeaderLoadDone();
+
             if (ret.statusCode == '200') {
               var result = ret.body.data;
-              var matchList = $api.byId('matchList')
-              var tpl = template(result);
-              $api.append(matchList, tpl);
+              curCount = result.classifyList.length;
+              updataList(result);              
             }else{
               alert('糟糕，错误状态码：'+ret.statusCode)
             }
         } else {
             alert('出错啦：'+err.statusCode);
         }
+        api.hideProgress();
+
     });
   }
+
+  function updataList(data){
+      var matchList = $api.byId('matchList')
+      var tpl = template(data);
+      $api.append(matchList, tpl);
+  }
+
 
   // 刷新
   function initPull() {
