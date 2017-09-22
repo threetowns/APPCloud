@@ -45,6 +45,13 @@
       var data = {
         demandId: api.pageParam.id
       }
+      api.showProgress({
+        style: 'default',
+        animationType: 'fade',
+        title: '努力加载中...',
+        text: '',
+        modal: false
+    });
       api.ajax({
           url: 'http://172.16.50.57:8080/api/wxdemand/demandDetail',
           method: 'post',
@@ -59,6 +66,7 @@
           }
       }, function(ret, err) {
           if (ret) {
+              api.hideProgress();
               if (ret.statusCode == '200') {
                 var result = ret.body.data;
                 // alert(JSON.stringify(result))

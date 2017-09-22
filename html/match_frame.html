@@ -44,7 +44,7 @@
       api.addEventListener({
           name: 'scrolltobottom',
           extra: {
-              threshold: 300 // 距离底部还有多少触发scrolltobottom事件
+              threshold: 60 // 距离底部还有多少触发scrolltobottom事件
           }
       }, function(ret, err) {
           // 获取更多的商品
@@ -55,6 +55,13 @@
   var pageNumber = 1;
 
   function getClassifyList(params){
+    api.showProgress({
+        style: 'default',
+        animationType: 'fade',
+        title: '努力加载中...',
+        text: '',
+        modal: false
+    });
     var params = params || {}
     var data = {
       "version": "1.0",
@@ -82,6 +89,7 @@
         }
     }, function(ret, err) {
         if (ret) {
+            api.hideProgress();
             if (ret.statusCode == '200') {
               var result = ret.body.data;
               var matchList = $api.byId('matchList')
