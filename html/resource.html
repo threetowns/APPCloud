@@ -37,8 +37,13 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script>
   apiready = function(){
+    $api.fixStatusBar(banner);
+    api.setStatusBarStyle({
+        style: 'light'
+    });
     Scroll()
     openMatchFrame()
+
   }
 
   var banner, bannerH
