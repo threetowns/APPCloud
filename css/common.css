@@ -1,0 +1,67 @@
+@import url('./fonts.css');
+*{padding: 0;margin: 0;-webkit-box-sizing: border-box;box-sizing: border-box;}
+body{font-size: 14px;font-family: 'Microsoft YaHei';}
+a{color: #666;}
+a:hover{color: #15aafb;}
+
+html,body {font-size:14px; height:100%;  }
+.flex-wrap{ display: -webkit-box; display: -webkit-flex;  display: flex; }
+.flex-con{ -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; }
+.flex-vertical{ -webkit-box-orient: vertical;-webkit-flex-flow: column;flex-flow: column; }
+.flex-con{ overflow: auto }
+
+#wrap{ height: 100%; }
+.greyBg{background: #ebebeb;}
+/* footer style */
+.footer_nav{position: relative;/* position: fixed;bottom: 0;left: 0;right: 0;z-index: 1001; */background: #fafafa;}
+.footer_nav .items{position: relative;height: 0.98rem;  width: 33.33%;  padding-top: .08rem;color: #666;float: left;text-align: center;display: block;}
+.footer_nav .items:before{position: absolute;top: 0;bottom: 0;right: 0;content: "";width: 1px;background: #ccc;}
+.footer_nav .items:last-child:before{display: none;}
+.footer_nav .items i{font-size: .46rem;line-height: .56rem;display: block;margin: 0 auto;}
+.footer_nav .items span{font-size: .24rem;line-height: .3rem;}
+.footer_nav .items.cur{color: #15aafb;}
+/* header style */
+.header{
+  position: relative;
+  height: .88rem;
+  font-size: .32rem;
+  line-height: .88rem;
+  background: #1a1a1f;
+  color: #fff;
+}
+.header .back{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1.32rem;
+  height: 100%;
+  text-align: center;
+  white-space: nowrap;
+}
+.header .back i{
+  transform: rotate(180deg);
+  display: inline-block;
+  font-size: .46rem;
+  vertical-align: middle;
+}
+.header .back:after{
+  content: "返回";
+}
+
+.header .title{
+  margin: 0 1.24rem;
+  font-size: .38rem;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.header .right{
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: .88rem;
+  line-height: .88rem;
+  padding: 0 .2rem;
+}
+

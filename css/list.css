@@ -1,0 +1,161 @@
+/* matchList style */
+.matchList{
+  /* position: relative;
+  z-index: 0; */
+  background: #ebebeb;
+}
+.commonItems{
+  position: relative;
+  padding: .28rem;
+  background: #fff;
+  margin-bottom: .2rem;
+}
+.commonItems .title{
+  font-size: .32rem;
+  color: #333;
+  line-height: 1.3;
+  margin-bottom: .32rem;
+  margin-right: 1rem;
+}
+.commonItems .type{
+  display: block;
+  width:  .54rem;
+  height:  .96rem;
+  line-height: .38rem;
+  position: absolute;
+  right:  .28rem;
+  top: 0;
+  padding: .37rem 0 .22rem;
+  background: #f00;
+  font-size: .29rem;
+  color: #fff;
+  text-align: center;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% .86rem, 0 100%)
+}
+.commonItems .type-need{
+  background: #ffb400;
+}
+.commonItems .type-receive{
+  background: #00ccff;
+}
+.commonItems .bd{
+  margin-bottom: .26rem;
+}
+.commonItems .cate{
+  padding: 0 10px;
+  height: .34rem;
+  line-height: .34rem;
+  font-size: .24rem;
+  border: 1px solid #999;
+  border-radius: .17rem;
+  color: #999;
+  letter-spacing: 2px;
+}
+.commonItems .price{
+  margin-left: .26rem;
+  font-size: .28rem;
+  color: #666;
+  vertical-align: middle;
+}
+.commonItems .price b{
+  font-weight: normal;
+  margin-left: 2px;
+  font-size: .44rem;
+  color: #15aafb;
+}
+.commonItems .sale{
+  margin-left: .18rem;
+  font-size: .24rem;
+  color: #999;
+  text-decoration: line-through;
+}
+.commonItems .meta{
+  font-size: .24rem;
+  color: #999;
+}
+.commonItems .meta span{
+  margin-right: .36rem;
+}
+.commonItems .meta span i{
+  font-size: .26rem;
+}
+.commonItems .meta span:last-child{
+  margin-right: 0;
+}
+.commonItems .like{
+  position: absolute;
+  right: .28rem;
+  bottom: .32rem;
+  color: #999;
+  /* width: .54rem; */
+  font-size: .2rem;
+  text-align: center;
+  white-space: nowrap;
+}
+.commonItems .like:after{ content: '收藏'; }
+.commonItems .like i{ font-size: .28rem; display: block; }
+.commonItems .isLike{ color: #ffb400; }
+.commonItems .isLike:after{ content: '已收藏'; }
+/* cardItems */
+.cardItems{
+  position: relative;
+  padding: .28rem;
+  background: #fff;
+  margin-bottom: .2rem;
+}
+.cardItems .title{
+  font-size: .32rem;
+  height: .6rem;
+  line-height: .6rem;
+}
+.cardItems .content{
+  font-size: .28rem;
+  line-height: .36rem;
+  color: #666;
+}
+.doubleDl{
+  /* height: .6rem; */
+  line-height: .6rem;
+}
+.doubleDl dt{
+  width: 1.6rem;
+  font-size: .32rem;
+  color: #666;
+}
+.doubleDl dd{
+  font-size: .28rem;
+  color: #666;
+}
+
+
+/* cateList style */
+.cateList{ overflow: hidden; }
+.cateList li{
+  width: 20%;
+  float: left;
+  background-color: #fff;
+  text-align: center;
+}
+.cateList li:nth-of-type(2n){
+  background: #f5f5f5;
+}
+.cateList li a{display: block;}
+.cateList li img{
+  display: block;
+  width: 100%;
+}
+.cateList li span {
+  display: block;
+  padding-top: 0.22rem;
+  padding-bottom: 0.30rem;
+  line-height: 1;
+}
+
+.push-status{
+  height: .86rem;
+  line-height: .86rem;
+  font-size: .32rem;
+  text-align: center;
+  background: #ebebeb;
+  color: #666;
+}
